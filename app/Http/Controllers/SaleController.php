@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -11,7 +14,9 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sale::with('product', 'customer')->get();
+        return view('pages.sale.index', ['sales' => $sales]);
+        //return $sales;
     }
 
     /**
@@ -19,7 +24,9 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::all();
+        $customers = Customer::all();
+        return view('pages.sale.create', ['products' => $products, 'customers' => $customers]);
     }
 
     /**
@@ -27,7 +34,21 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::findOrFail($request->product_id);
+        $soldQty = $request->quantity;
+        $totalAmount = $product->price * $soldQty;
+        if ($soldQty <= $product->quantity){
+            Sale::create([
+                'product_id' => $request->product_id,
+                'customer_id' => $request->customer_id,
+                'quantity' => $soldQty,
+                'total_amount' => $totalAmount
+            ]);
+            $product->decrement('quantity', $soldQty);
+            return redirect()->route('sales.index')->with('message', 'Product Sold Successfully');
+        }else{
+            return redirect()->route('sales.create')->with('message', 'Number of Product quantity not available');
+        }
     }
 
     /**

@@ -3,36 +3,33 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header d-flex justify-content-between align-items-center">Brand List
-                    <a class="btn btn-primary" href="{{route('brands.create')}}">Create a Brand</a>
+                <h5 class="card-header d-flex justify-content-between align-items-center">Sale List
+                    <a class="btn btn-primary" href="{{route('sales.create')}}">Create a Sale</a>
                 </h5>
                 <div class="table-responsive text-nowrap">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                            <th>Status</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                        @foreach($brands as $brand)
+                        @foreach($sales as $sale)
                             <tr>
                                 <td>
-                                    <span class="fw-medium">{{$brand->name}}</span>
+                                    <span class="fw-medium">{{$sale->customer->name}}</span>
                                 </td>
-                                <td>{{$brand->description}}</td>
+                                <td>{{$sale->product->name}}</td>
+
                                 <td>
-                                    <img src="{{asset('images/brands/'.$brand->image)}}" alt="" width="50">
+                                    {{$sale->quantity}}
                                 </td>
                                 <td>
-                                    @if($brand->status)
-                                        <span class="badge bg-label-primary me-1">Active</span>
-                                    @else
-                                        <span class="badge bg-label-warning me-1">Inactive</span>
-                                    @endif
+                                    {{$sale->total_amount}}
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -40,10 +37,10 @@
                                             <i class="ti ti-dots-vertical"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('brands.edit', $brand->id)}}"
+                                            <a class="dropdown-item" href="{{route('sales.edit', $sale->id)}}"
                                             ><i class="ti ti-pencil me-1"></i> Edit</a
                                             >
-                                            <form action="{{route('brands.destroy', $brand->id)}}" method="post" class="dropdown-item">
+                                            <form action="{{route('sales.destroy', $sale->id)}}" method="post" class="dropdown-item">
                                                 @csrf
                                                 @method('DELETE')
                                                 <i class="ti ti-trash me-1"></i>
