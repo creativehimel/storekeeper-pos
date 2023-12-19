@@ -12,9 +12,9 @@
                               <div class="badge rounded bg-label-primary p-1">
                                 <i class="ti ti-currency-dollar ti-sm"></i>
                               </div>
-                              <h6 class="mb-0">Earnings</h6>
+                              <h6 class="mb-0">Sale Today</h6>
                             </div>
-                            <h4 class="my-2 pt-1">$545.69</h4>
+                            <h4 class="my-2 pt-1">{{$salesToday}} Tk</h4>
                             <div class="progress w-75" style="height: 4px">
                               <div
                                 class="progress-bar"
@@ -28,9 +28,9 @@
                           <div class="col-12 col-sm-3">
                             <div class="d-flex gap-2 align-items-center">
                               <div class="badge rounded bg-label-info p-1"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
-                              <h6 class="mb-0">Profit</h6>
+                              <h6 class="mb-0">Sale Yesterday</h6>
                             </div>
-                            <h4 class="my-2 pt-1">$256.34</h4>
+                            <h4 class="my-2 pt-1">{{$salesYesterday}} Tk</h4>
                             <div class="progress w-75" style="height: 4px">
                               <div
                                 class="progress-bar bg-info"
@@ -46,9 +46,9 @@
                               <div class="badge rounded bg-label-danger p-1">
                                 <i class="ti ti-brand-paypal ti-sm"></i>
                               </div>
-                              <h6 class="mb-0">Expense</h6>
+                              <h6 class="mb-0">Sale This Month</h6>
                             </div>
-                            <h4 class="my-2 pt-1">$74.19</h4>
+                            <h4 class="my-2 pt-1">{{$salesThisMonth}} Tk</h4>
                             <div class="progress w-75" style="height: 4px">
                               <div
                                 class="progress-bar bg-danger"
@@ -64,9 +64,9 @@
                               <div class="badge rounded bg-label-danger p-1">
                                 <i class="ti ti-brand-paypal ti-sm"></i>
                               </div>
-                              <h6 class="mb-0">Expense</h6>
+                              <h6 class="mb-0">Sale Last Month</h6>
                             </div>
-                            <h4 class="my-2 pt-1">$74.19</h4>
+                            <h4 class="my-2 pt-1">{{$salesLastMonth}} Tk</h4>
                             <div class="progress w-75" style="height: 4px">
                               <div
                                 class="progress-bar bg-danger"
@@ -85,25 +85,44 @@
     <!--/ Earning Reports -->
 
     <!-- Projects table -->
-        <div class="col-12 col-xl-12 col-sm-12 order-1 order-lg-2 mb-4 mb-lg-0">
+    <div class="row">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-datatable table-responsive">
-                    <table class="datatables-projects table border-top">
+                <h5 class="card-header">Sales List
+                </h5>
+                <div class="table-responsive text-nowrap mb-4">
+                    <table class="table table-striped">
                         <thead>
-                          <tr>
-                            <th></th>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Leader</th>
-                            <th>Team</th>
-                            <th class="w-px-200">Status</th>
-                            <th>Action</th>
-                          </tr>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                        </tr>
                         </thead>
-                      </table>
-                    </div>
-                  </div>
+                        <tbody class="table-border-bottom-0">
+                        @foreach($sales as $sale)
+                            <tr>
+                                <td>
+                                    <span class="fw-medium">{{$sale->customer->name}}</span>
+                                </td>
+                                <td>{{$sale->product->name}}</td>
+
+                                <td>
+                                    {{$sale->quantity}}
+                                </td>
+                                <td>
+                                    {{$sale->total_amount}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
+    </div>
     <!--/ Projects table -->
 </div>
 @endsection()

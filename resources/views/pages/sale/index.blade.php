@@ -37,9 +37,6 @@
                                             <i class="ti ti-dots-vertical"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('sales.edit', $sale->id)}}"
-                                            ><i class="ti ti-pencil me-1"></i> Edit</a
-                                            >
                                             <form action="{{route('sales.destroy', $sale->id)}}" method="post" class="dropdown-item">
                                                 @csrf
                                                 @method('DELETE')

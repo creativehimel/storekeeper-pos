@@ -80,6 +80,7 @@ class SaleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Sale::destroy($id);
+        return redirect()->route('sales.index');
     }
 }
